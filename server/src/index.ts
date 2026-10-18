@@ -2,6 +2,6 @@ import app from './app.js';
 
 const PORT = Number(process.env.PORT) || 3000;
 
-app.listen(PORT, () => {
-  console.log(`FixFlow API running at http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`FixFlow API running on port ${PORT}`);
 });

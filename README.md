@@ -1,75 +1,161 @@
-# React + TypeScript + Vite
+# FixFlow — Issue Tracking System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+FixFlow is a full-stack issue tracking application built to demonstrate practical frontend development, REST API design, data validation, automated testing, and continuous integration.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Issue management:** Create, view, update, and delete issues.
+- **Issue details:** Open an issue to view its description and details.
+- **Status tracking:** Track issues as Open, In Progress, or Resolved.
+- **Priority levels:** Classify issues as Low, Medium, High, or Critical.
+- **Comments:** Add comments to issues and review their activity.
+- **Search and filtering:** Find issues and narrow results using available filters.
+- **Dashboard:** View issue statistics and monitor issue statuses.
+- **API validation:** Validate incoming issue and comment data.
+- **Automated testing:** Test API endpoints using Vitest and Supertest.
+- **Continuous integration:** Use GitHub Actions to build the frontend, run backend tests, and build the backend.
 
-## React Compiler
+## Technology Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+ Frontend:  React, TypeScript, Vite 
+ Backend : Node.js, Express, TypeScript 
+ Validation:  Zod
+ API testing: Vitest, Supertest
+ CI/CD: GitHub Actions 
+ Version control: Git and GitHub 
 
-## Expanding the ESLint configuration
+## Architecture
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+FixFlow uses a React frontend that communicates with a REST API built with Express and TypeScript.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+The backend provides endpoints for issue management, issue details, and comments. Zod validates incoming data, while automated tests verify key API behaviours.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+GitHub Actions runs the production builds and backend tests when changes are pushed or pull requests are opened against the `main` or `master` branches.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Getting Started
 
+### Prerequisites
+
+- Node.js and npm
+- Git
+- A code editor such as Visual Studio Code
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/BerniceMlangeni/fixflow.git
+cd fixflow
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Install frontend dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
 ```
+
+### 3. Configure the frontend API URL
+
+Create a `.env` file in the project root:
+
+```env
+VITE_API_URL=http://localhost:3000
+```
+
+Do not commit local environment files or secrets to GitHub.
+
+### 4. Install backend dependencies
+
+```bash
+cd server
+npm install
+```
+
+### 5. Start the backend
+
+From the `server` directory, run:
+
+```bash
+npm run dev
+```
+
+The API runs at `http://localhost:3000` by default.
+
+### 6. Start the frontend
+
+Open a second terminal in the project root:
+
+```bash
+npm run dev
+```
+
+Open the local URL printed by Vite in your browser.
+
+## API Endpoints
+
+ GET: `/health`  Check API health 
+ GET  `/api/issues`  List issues 
+ GET  `/api/issues/:id` Retrieve an issue 
+ POST  `/api/issues`  Create an issue 
+ PATCH  `/api/issues/:id`  Update an issue 
+ DELETE  `/api/issues/:id`  Delete an issue 
+ GET  `/api/issues/:id/comments`  Retrieve issue comments 
+ POST  `/api/issues/:id/comments`  Add an issue comment 
+
+## Testing
+
+Run the backend tests:
+
+```bash
+cd server
+npm test
+```
+
+Build the backend:
+
+```bash
+npm run build
+```
+
+Build the frontend from the project root:
+
+```bash
+npm run build
+```
+
+The automated API tests cover health checks, issue retrieval, validation, issue creation, updates, deletion, and comments.
+
+## Continuous Integration
+
+The GitHub Actions workflow is located at `.github/workflows/ci.yml`.
+
+It automatically:
+
+1. Checks out the repository.
+2. Sets up Node.js.
+3. Installs frontend and backend dependencies.
+4. Builds the frontend.
+5. Runs backend API tests.
+6. Builds the backend.
+
+A failed step identifies a problem that should be investigated before the changes are considered verified.
+
+## Current Limitations
+
+- Issues and comments are stored in memory, so data resets when the backend process restarts.
+- Authentication and role-based access control are not yet implemented.
+- The application is currently intended as a portfolio and learning project rather than a production service.
+
+## Future Improvements
+
+- Add persistent database storage.
+- Introduce user authentication and authorization.
+- Add more automated tests, including edge cases.
+- Deploy the frontend and backend.
+- Add application monitoring and production error handling.
+
+## Author
+
+**Bernice Mlangeni**
+
+GitHub: [BerniceMlangeni](https://github.com/BerniceMlangeni)
+

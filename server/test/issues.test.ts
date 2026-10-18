@@ -1,7 +1,22 @@
 
-import { describe, expect, it } from 'vitest';
+import {
+  afterAll,
+  beforeAll,
+  describe,
+  expect,
+  it,
+} from 'vitest';
 import request from 'supertest';
-import app from '../src/app.js';
+import app, { initializeDatabase } from '../src/app.js';
+import { pool } from '../src/db.js';
+
+beforeAll(async () => {
+  await initializeDatabase();
+});
+
+afterAll(async () => {
+  await pool.end();
+});
 
 describe('FixFlow API', () => {
   it('returns a healthy status', async () => {
